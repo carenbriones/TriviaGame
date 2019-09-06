@@ -33,7 +33,7 @@ $(document).ready(function () {
 
     var intervalID;
     var countdown = 30;
-    questionIndex = 0;
+    var questionIndex = 0;
 
 
     function askQuestion() {
@@ -49,7 +49,7 @@ $(document).ready(function () {
         } else { // All questions have been cycled through; end game
             clearInterval(intervalID);
             // Clears out question and timer
-            $("#question-area").empty();
+            $("#question, .answer").empty();
             $("#timer").empty();
 
             // Displays stats
@@ -79,6 +79,7 @@ $(document).ready(function () {
 
     // Starts game by displaying first question
     $("#start").on("click", function () {
+        resetGame();
         // Hides start button and instructions
         $(this).css("display", "none");
         $("#instructions").empty();
@@ -100,6 +101,13 @@ $(document).ready(function () {
         askQuestion();
     })
 
+    function resetGame(){
+        questionIndex = 0;
+        correct = 0;
+        incorrect = 0;
+        unanswered = 0;
+        $("#correct, #incorrect, #unanswered, #message, #question, .answer").empty();
+    }
 
     // User clicks start
     // Timer for first question starts counting down
