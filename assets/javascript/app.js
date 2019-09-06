@@ -27,8 +27,12 @@ $(document).ready(function () {
 
     ];
 
+    var correct = 0;
+    var incorrect = 0;
+    var unanswered = 0;
+
     var intervalID;
-    var countdown = 30;
+    var countdown = 5;
     questionIndex = 0;
 
 
@@ -48,12 +52,15 @@ $(document).ready(function () {
 
     function countDownTime(){
         countdown--;
-        $("#timer").text(countdown);
 
+        // If countdown equals 0, question was unanswered
         if (countdown === 0){
-            countdown = 30;
-            clearInterval(intervalID);
             askQuestion();
+            countdown = 5;
+            $("#timer").text("");
+            unanswered++;
+        } else {
+            $("#timer").text(countdown);
         }
     }
 
@@ -66,6 +73,13 @@ $(document).ready(function () {
         askQuestion();
     })
 
+    $(".answer").on("click", function(){
+        // if clicked answer matches answer of question, user was correct
+        if ($(this).text() === questions[questionIndex - 1].answer){
+            correct++;
+            console.log("Correct");
+        }
+    })
     
 
     // User clicks start
