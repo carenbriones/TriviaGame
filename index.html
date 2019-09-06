@@ -24,13 +24,31 @@
 <body>
     <div class="container mx-auto">
         <h1>Trivia Game</h1>
+        <div id="instructions">
+            <p>Test your knowledge of Disney movies!!</p>
+            <p>The Trivia Game is 10 questions long. You have 30 seconds to answer each question.
+                If you click on an answer, a message will be displayed to let you know if your answer
+                was correct or not before automatically moving on to the next question.
+                If you don't select an answer before the 30 seconds is over, a warning will be displayed,
+                and the game will move on to the next question. After the 10 questions, your scores will
+                be displayed on the screen.
+            </p>
+            <p>Click "Start" to begin the game!</p>
+            
+        </div>
+        <div id="message"></div>
         <button type="button" class="btn btn-primary" id="start">Start</button>
         <div id="timer"></div>
-        <div id="question"></div>
-        <div class="answer" id="answer-1"></div>
-        <div class="answer" id="answer-2"></div>
-        <div class="answer" id="answer-3"></div>
-        <div class="answer" id="answer-4"></div>
+        <div id="question-area">
+            <div id="question"></div>
+            <div class="answer" id="answer-1"></div>
+            <div class="answer" id="answer-2"></div>
+            <div class="answer" id="answer-3"></div>
+            <div class="answer" id="answer-4"></div>
+        </div>
+        <div id="correct"></div>
+        <div id="incorrect"></div>
+        <div id="unanswered"></div>
 
     </div>
 
