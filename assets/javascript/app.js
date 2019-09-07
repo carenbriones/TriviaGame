@@ -16,8 +16,21 @@ $(document).ready(function () {
         new Question("Which of the following Disney characters was the first to have her own full length movie?",
             ["Ariel", "Snow White", "Cinderella", "Mulan"], "Snow White"),
         new Question("What was Nemo's dad's name in \"Finding Nemo\"?", ["Martin", "Marvin", "Marlin", "Mark"],
-            "Marlin")
-
+            "Marlin"),
+        new Question("What is Mulan's family name?", ["Zhu", "Fa", "Ma", "Zhang"], "Fa"),
+        new Question("Which of the following is NOT a Disney film?", 
+            ["How to Train Your Dragon", "Enchanted", "Maleficent", "Lady and the Tramp"],
+            "How to Train Your Dragon"),
+        new Question("Which of the following is NOT a song sung in the film \"Frozen\"?",
+            ["Let it Go", "Love is an Open Door", "Go the Distance", "In Summer"], "Go the Distance"),
+        new Question("How many fairy godmothers did Aurora from \"Sleeping Beauty\" have?",
+            ["2", "3", "4", "5"], "3"),
+        new Question("What was the name of Aladdin's monkey sidekick?",
+            ["Abubu", "Abu", "Apu", "Abibi"], "Abu"),
+        new Question("Which phrase means \"No worries\"?",
+            ["Hakuna Matata", "Carpe Diem", "Se me fue el avion", "Lea iacta est"], "Hakuna Matata"),
+        new Question("What time did Cinderella have to leave the ball?",
+            ["9PM", "10PM", "11PM", "12AM"], "12AM")
     ];
 
     // Variables for number of correct, incorrect, and unanswered questions
