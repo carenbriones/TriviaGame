@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     function formatQuestion(q) {
         console.log(q.question);
-        $("#question").html("<h6>" + q.question + "</h6>");
+        $("#question").html("<p><b>" + q.question + "</b></p>");
 
         for (var i = 0; i < q.answers.length; i++) {
             $("#answer-" + (i + 1)).html("<p>" + q.answers[i] + "</p>");
@@ -42,6 +42,8 @@ $(document).ready(function () {
         countdown = 30;
         // If all questions have not been cycled through
         if (questionIndex !== questions.length) {
+            // Displays 30, since setInterval starts after one second
+            $("#timer").text("Time Remaining: " + countdown);
             intervalID = setInterval(countDownTime, 1000);
 
             // Display question
@@ -71,7 +73,8 @@ $(document).ready(function () {
         if (countdown === 0) {
             status = "unanswered";
             unanswered++;
-            // askQuestion();
+
+            clearInterval(intervalID);
             displayMessage(status);
             setTimeout(proceedToNextQ, 5000);
 
@@ -109,8 +112,6 @@ $(document).ready(function () {
         clearInterval(intervalID);
         displayMessage(status);
         setTimeout(proceedToNextQ, 5000);
-
-
     })
 
     function resetGame() {
@@ -131,21 +132,35 @@ $(document).ready(function () {
         if (status === "correct") {
             console.log(status);
             $("#message").text("Correct!");
+            $("#post-question-image").html("<img src=\"assets/images/correct.gif\" alt=\"Snow White clapping\">");
+
         } else if (status === "incorrect") { // If user got answer incorrect, display "incorrect!" message
             console.log(status);
             $("#message").text("Incorrect! The correct answer was \"" + questions[questionIndex - 1].answer + "\"");
+            $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
         } else { // If user did not answer, display "out of time" message and display correct answer.
             console.log(status);
-            var unansweredMessage = "Out of time!\n";
-            unansweredMessage += "The correct answer was \"" + questions[questionIndex - 1].answer + "\"";
-            $("#message").text(unansweredMessage);
+            var unansweredMessage = "<p>Out of time!</p>";
+            unansweredMessage += "<p>The correct answer was \"" + questions[questionIndex - 1].answer + "\"</p>";
+            $("#message").html(unansweredMessage);
+            $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
         }
     }
 
     function proceedToNextQ() {
-        // Clears out message before displaying next question
-        $("#message").empty();
+        // Clears out message and image before displaying next question
+        $("#message, #post-question-image").empty();
         askQuestion();
     }
 
 })
+
+/*
+ * TODO (if you have extra time!!!):
+ * 
+ * Change order answered are displayed for randomization
+ * Display different messages at end of game dependent on score
+ * Show different images/gifs for each question
+ * 
+ * 
+ */

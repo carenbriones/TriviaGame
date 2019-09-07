@@ -1,5 +1,21 @@
+body{
+    width: 100%;
+    background-color: #fefefc;
+    padding: 20px;
+    font-family: 'Merriweather', serif;
+}
+
+html{
+    background-image: url("../images/mickey-background.jpg");
+    padding-top: 20px;
+}
+
 .answer:hover{
     background-color: #e6e6e6; 
+}
+
+.answer, #message{
+    padding: 5px 0px;
 }
 
 h1{
@@ -16,9 +32,14 @@ h1{
 #start{
     margin: 0 auto;
     font-family: 'Mouse Memoirs', sans-serif;
+    font-size: 30px;
 }
 
-#wrapper, #question, #timer{
+button{
+    border: 1px solid black;
+}
+
+#wrapper, #question, #timer, #message, .answer{
     text-align: center;
 }
 
@@ -26,3 +47,18 @@ h1{
     font-family: 'Mouse Memoirs', sans-serif;
     font-size: 30px;
 }
+
+img{
+    display: block;
+    margin: auto;
+    width: 80%;
+}
+
+@media screen and (min-width: 700px){
+    body{
+        width: 700px;
+        margin: 0 auto;
+    }
+}
+
+
