@@ -1,3 +1,14 @@
+/**
+ * @author Caren Briones <carenpbriones@gmail.com>
+ * Provides functionalities for Trivia Game
+ * 
+ * Displays each question one by one with countdown timer, allows user to answer question, 
+ * displays correct/incorrect/unanswered after each question, keeps track of and displays
+ * stats at end of game.
+ * 
+ * September 5, 2019
+ */
+
 $(document).ready(function () {
     
     /* Constructor for Questions */
@@ -45,7 +56,7 @@ $(document).ready(function () {
     var countdown = 30;
 
     // Variable to iterate through array of questions
-    var questionIndex = 0;
+    var questionIndex = -1;
     
     /* Displays a question on the page */
     function displayQuestion(q) {
@@ -62,6 +73,7 @@ $(document).ready(function () {
         ends game if there are no more questions left
     */
     function askQuestion() {
+        questionIndex++;
         clearInterval(intervalID);
         countdown = 30;
         // If all questions have not been cycled through
@@ -72,7 +84,6 @@ $(document).ready(function () {
 
             // Display question
             displayQuestion(questions[questionIndex]);
-            questionIndex++;
         } else { // All questions have been cycled through; end game
             clearInterval(intervalID);
             // Clears out question and timer
@@ -120,7 +131,7 @@ $(document).ready(function () {
     $(".answer").on("click", function () {
         // if clicked answer matches answer of question, user was correct
         // Note: used questionIndex - 1 because it's set to next index at end of askQuestion()
-        if ($(this).text() === questions[questionIndex - 1].answer) {
+        if ($(this).text() === questions[questionIndex].answer) {
             status = "correct";
             correct++;
         } else { // If clicked answer doesn't match, answer was incorrect
@@ -133,7 +144,7 @@ $(document).ready(function () {
 
     /* Resets stats for the game */
     function resetGame() {
-        questionIndex = 0;
+        questionIndex = -1;
         correct = 0;
         incorrect = 0;
         unanswered = 0;
@@ -154,16 +165,16 @@ $(document).ready(function () {
 
         } else if (status === "incorrect") { // If user got answer incorrect, display "incorrect!" message
             console.log(status);
-            $("#message").text("Incorrect! The correct answer was \"" + questions[questionIndex - 1].answer + "\"");
+            $("#message").text("Incorrect! The correct answer was \"" + questions[questionIndex].answer + "\"");
             // $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
         } else { // If user did not answer, display "out of time" message and display correct answer.
             console.log(status);
             var unansweredMessage = "<p>Out of time!</p>";
-            unansweredMessage += "<p>The correct answer was \"" + questions[questionIndex - 1].answer + "\"</p>";
+            unansweredMessage += "<p>The correct answer was \"" + questions[questionIndex].answer + "\"</p>";
             $("#message").html(unansweredMessage);
             // $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
         }
-        $("#post-question-image").html("<img src=\"" + questions[questionIndex - 1].image + "\">");
+        $("#post-question-image").html("<img src=\"" + questions[questionIndex].image + "\">");
     }
 
     /* Clears messages and proceeds to next question */
@@ -171,6 +182,9 @@ $(document).ready(function () {
         // Clears timer, displays correct/incorrect/unanswered message
         clearInterval(intervalID);
         displayMessage(status);
+
+        // Clears out background color on empty answer divs
+        $(".answer").css("background-color", "#fefefc");
 
         setTimeout(function(){
             // Clears out message and image
@@ -181,11 +195,11 @@ $(document).ready(function () {
 
     // Only changes color on hover when the answers are displayed on screen
     $(".answer").hover(function(){
-        // If there is text in the answer div, change background color to gray on mouseon
+        // If there is text in the answer div, change background color to gray on mouseenter
         if($(this).text() !== ""){
             $(this).css("background-color", "#e6e6e6");
         }
-    }, function(){ // Changes background color to white on mouseoff
-        $(this).css("background-color", "white");
+    }, function(){ // Changes background color to white on mouseleave
+        $(this).css("background-color", "#fefefc");
     })
 })

@@ -1,3 +1,8 @@
+/*
+    @author Caren Briones <carenpbriones@gmail.com>
+    September 5, 2019
+*/
+
 html{
     background-image: url("../images/mickey-background.jpg");
     padding-top: 20px;
@@ -32,6 +37,7 @@ button{
 
 .answer{
     padding: 5px;
+    background-color: "#fefefc";
 }
 
 #timer{
@@ -43,6 +49,7 @@ img{
     display: block;
     margin: auto;
     width: 80%;
+    max-height: 400px;
 }
 
 @media screen and (min-width: 700px){
