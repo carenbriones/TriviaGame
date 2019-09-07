@@ -1,22 +1,14 @@
+html{
+    background-image: url("../images/mickey-background.jpg");
+    padding-top: 20px;
+}
+
 body{
     width: 100%;
     background-color: #fefefc;
     padding: 20px;
     font-family: 'Merriweather', serif;
     text-align: center;
-}
-
-html{
-    background-image: url("../images/mickey-background.jpg");
-    padding-top: 20px;
-}
-
-.answer:hover{
-    background-color: #e6e6e6; 
-}
-
-.answer{
-    padding: 5px;
 }
 
 h1{
@@ -38,6 +30,10 @@ button{
     border: 1px solid black;
 }
 
+.answer{
+    padding: 5px;
+}
+
 #timer{
     font-family: 'Mouse Memoirs', sans-serif;
     font-size: 30px;
@@ -55,5 +51,3 @@ img{
         margin: 0 auto;
     }
 }
-
-

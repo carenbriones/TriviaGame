@@ -2,35 +2,36 @@ $(document).ready(function () {
     
     /* Constructor for Questions */
     class Question {
-        constructor(question, answers, answer) {
+        constructor(question, answers, answer, image) {
             this.question = question;
             this.answers = answers;
             this.answer = answer;
+            this.image = image;
         }
     }
 
     // Array of questions asked in the Trivia Game
     var questions = [
         new Question("Which of the following is NOT the name of one of the seven dwarves from Snow White?",
-            ["Sleepy", "Doc", "Dopey", "Mopey"], "Mopey"),
+            ["Sleepy", "Doc", "Dopey", "Mopey"], "Mopey", "assets/images/six-dwarfs.gif"),
         new Question("Which of the following Disney characters was the first to have her own full length movie?",
-            ["Ariel", "Snow White", "Cinderella", "Mulan"], "Snow White"),
+            ["Ariel", "Snow White", "Cinderella", "Mulan"], "Snow White", "assets/images/snow-white.gif"),
         new Question("What was Nemo's dad's name in \"Finding Nemo\"?", ["Martin", "Marvin", "Marlin", "Mark"],
-            "Marlin"),
-        new Question("What is Mulan's family name?", ["Zhu", "Fa", "Ma", "Zhang"], "Fa"),
+            "Marlin", "assets/images/marlin-and-nemo.gif"),
+        new Question("What is Mulan's family name?", ["Zhu", "Fa", "Ma", "Zhang"], "Fa", "assets/images/mulan.gif"),
         new Question("Which of the following is NOT a Disney film?", 
             ["How to Train Your Dragon", "Enchanted", "Maleficent", "Lady and the Tramp"],
-            "How to Train Your Dragon"),
+            "How to Train Your Dragon", "assets/images/toothless.gif"),
         new Question("Which of the following is NOT a song sung in the film \"Frozen\"?",
-            ["Let it Go", "Love is an Open Door", "Go the Distance", "In Summer"], "Go the Distance"),
+            ["Let it Go", "Love is an Open Door", "Go the Distance", "In Summer"], "Go the Distance", "assets/images/elsa.gif"),
         new Question("How many fairy godmothers did Aurora from \"Sleeping Beauty\" have?",
-            ["2", "3", "4", "5"], "3"),
+            ["2", "3", "4", "5"], "3", "assets/images/fairy-godmothers.gif"),
         new Question("What was the name of Aladdin's monkey sidekick?",
-            ["Abubu", "Abu", "Apu", "Abibi"], "Abu"),
+            ["Abubu", "Abu", "Apu", "Abibi"], "Abu", "assets/images/abu.gif"),
         new Question("Which phrase means \"No worries\"?",
-            ["Hakuna Matata", "Carpe Diem", "Se me fue el avion", "Lea iacta est"], "Hakuna Matata"),
+            ["Hakuna Matata", "Carpe Diem", "Se me fue el avion", "Lea iacta est"], "Hakuna Matata", "assets/images/hakuna-matata.gif"),
         new Question("What time did Cinderella have to leave the ball?",
-            ["9PM", "10PM", "11PM", "12AM"], "12AM")
+            ["9PM", "10PM", "11PM", "12AM"], "12AM", "assets/images/cinderella.gif")
     ];
 
     // Variables for number of correct, incorrect, and unanswered questions
@@ -149,19 +150,20 @@ $(document).ready(function () {
         if (status === "correct") {
             console.log(status);
             $("#message").text("Correct!");
-            $("#post-question-image").html("<img src=\"assets/images/correct.gif\" alt=\"Snow White clapping\">");
+            // $("#post-question-image").html("<img src=\"assets/images/correct.gif\" alt=\"Snow White clapping\">");
 
         } else if (status === "incorrect") { // If user got answer incorrect, display "incorrect!" message
             console.log(status);
             $("#message").text("Incorrect! The correct answer was \"" + questions[questionIndex - 1].answer + "\"");
-            $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
+            // $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
         } else { // If user did not answer, display "out of time" message and display correct answer.
             console.log(status);
             var unansweredMessage = "<p>Out of time!</p>";
             unansweredMessage += "<p>The correct answer was \"" + questions[questionIndex - 1].answer + "\"</p>";
             $("#message").html(unansweredMessage);
-            $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
+            // $("#post-question-image").html("<img src=\"assets/images/incorrect.gif\" alt=\"Sadness crying\">");
         }
+        $("#post-question-image").html("<img src=\"" + questions[questionIndex - 1].image + "\">");
     }
 
     /* Clears messages and proceeds to next question */
@@ -176,15 +178,14 @@ $(document).ready(function () {
             askQuestion();
         }, 5000);
     }
-})
 
-/*
- * TODO (if you have extra time!!!):
- * 
- * Change order answers are displayed for randomization
- * Display different messages at end of game dependent on score
- * Show different images/gifs for each question
- * Change hover color only when there a question and its answers are displayed
- * 
- * 
- */
+    // Only changes color on hover when the answers are displayed on screen
+    $(".answer").hover(function(){
+        // If there is text in the answer div, change background color to gray on mouseon
+        if($(this).text() !== ""){
+            $(this).css("background-color", "#e6e6e6");
+        }
+    }, function(){ // Changes background color to white on mouseoff
+        $(this).css("background-color", "white");
+    })
+})
