@@ -30,6 +30,7 @@ $(document).ready(function () {
     var correct = 0;
     var incorrect = 0;
     var unanswered = 0;
+    var status = "";
 
     var intervalID;
     var countdown = 30;
@@ -68,12 +69,16 @@ $(document).ready(function () {
 
         // If countdown equals 0, question was unanswered
         if (countdown === 0) {
+            status = "unanswered";
             unanswered++;
-            askQuestion();
+            // askQuestion();
+            displayMessage(status);
+            setTimeout(proceedToNextQ, 5000);
+
             countdown = 30;
             $("#timer").text("");
         } else {
-            $("#timer").text(countdown);
+            $("#timer").text("Time Remaining: " + countdown);
         }
     }
 
@@ -92,16 +97,23 @@ $(document).ready(function () {
         // if clicked answer matches answer of question, user was correct
         // Note: used questionIndex - 1 because it's set to next index at end of askQuestion()
         if ($(this).text() === questions[questionIndex - 1].answer) {
+            status = "correct";
             correct++;
-            console.log("Correct");
         } else { // If clicked answer doesn't match, answer was incorrect
+            status = "incorrect";
             incorrect++;
         }
         // Ask next question
-        askQuestion();
+        // askQuestion();
+
+        clearInterval(intervalID);
+        displayMessage(status);
+        setTimeout(proceedToNextQ, 5000);
+
+
     })
 
-    function resetGame(){
+    function resetGame() {
         questionIndex = 0;
         correct = 0;
         incorrect = 0;
@@ -109,13 +121,31 @@ $(document).ready(function () {
         $("#correct, #incorrect, #unanswered, #message, #question, .answer").empty();
     }
 
-    // User clicks start
-    // Timer for first question starts counting down
-    // User can either click an answer or not
-    // If user's answer is correct, show correct message, increment correct counter
-    // Else if user's answer is incorrect, show incorrect message, increment incorrect counter
-    // Else, unanswered and timer runs out; increment unanswered counter
-    // New question is displayed; continues until end of all questions
-    // End, display number of correct, incorrect, and unanswered questions
+    // Tells user if they didn't answer, or if their answer was correct or not
+    function displayMessage(status) {
+        // Clears out question, answers, and timer
+        
+        $("#question, #timer, .answer").empty();
+
+        // If user got answer correct, display "correct!" message
+        if (status === "correct") {
+            console.log(status);
+            $("#message").text("Correct!");
+        } else if (status === "incorrect") { // If user got answer incorrect, display "incorrect!" message
+            console.log(status);
+            $("#message").text("Incorrect! The correct answer was \"" + questions[questionIndex - 1].answer + "\"");
+        } else { // If user did not answer, display "out of time" message and display correct answer.
+            console.log(status);
+            var unansweredMessage = "Out of time!\n";
+            unansweredMessage += "The correct answer was \"" + questions[questionIndex - 1].answer + "\"";
+            $("#message").text(unansweredMessage);
+        }
+    }
+
+    function proceedToNextQ() {
+        // Clears out message before displaying next question
+        $("#message").empty();
+        askQuestion();
+    }
 
 })
