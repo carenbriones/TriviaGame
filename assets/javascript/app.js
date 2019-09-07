@@ -1,14 +1,6 @@
 $(document).ready(function () {
-
-    function formatQuestion(q) {
-        console.log(q.question);
-        $("#question").html("<p><b>" + q.question + "</b></p>");
-
-        for (var i = 0; i < q.answers.length; i++) {
-            $("#answer-" + (i + 1)).html("<p>" + q.answers[i] + "</p>");
-        }
-    }
-
+    
+    /* Constructor for Questions */
     class Question {
         constructor(question, answers, answer) {
             this.question = question;
@@ -17,6 +9,7 @@ $(document).ready(function () {
         }
     }
 
+    // Array of questions asked in the Trivia Game
     var questions = [
         new Question("Which of the following is NOT the name of one of the seven dwarves from Snow White?",
             ["Sleepy", "Doc", "Dopey", "Mopey"], "Mopey"),
@@ -27,16 +20,33 @@ $(document).ready(function () {
 
     ];
 
+    // Variables for number of correct, incorrect, and unanswered questions
     var correct = 0;
     var incorrect = 0;
     var unanswered = 0;
     var status = "";
 
+    // Variables for timers
     var intervalID;
     var countdown = 30;
+
+    // Variable to iterate through array of questions
     var questionIndex = 0;
+    
+    /* Displays a question on the page */
+    function displayQuestion(q) {
+        console.log(q.question);
+        $("#question").html("<p><b>" + q.question + "</b></p>");
 
+        for (var i = 0; i < q.answers.length; i++) {
+            $("#answer-" + (i + 1)).html("<p>" + q.answers[i] + "</p>");
+        }
+    }
 
+    /* 
+        Displays question if there are still questions left;
+        ends game if there are no more questions left
+    */
     function askQuestion() {
         clearInterval(intervalID);
         countdown = 30;
@@ -47,7 +57,7 @@ $(document).ready(function () {
             intervalID = setInterval(countDownTime, 1000);
 
             // Display question
-            formatQuestion(questions[questionIndex]);
+            displayQuestion(questions[questionIndex]);
             questionIndex++;
         } else { // All questions have been cycled through; end game
             clearInterval(intervalID);
@@ -66,6 +76,7 @@ $(document).ready(function () {
         }
     }
 
+    /* Counts down from 30, used to time each question */
     function countDownTime() {
         countdown--;
 
@@ -74,13 +85,8 @@ $(document).ready(function () {
             status = "unanswered";
             unanswered++;
 
-            clearInterval(intervalID);
-            displayMessage(status);
-            setTimeout(proceedToNextQ, 5000);
-
-            countdown = 30;
-            $("#timer").text("");
-        } else {
+            proceedToNextQ();
+        } else { // Continues to count down if there is still time left for user to answer
             $("#timer").text("Time Remaining: " + countdown);
         }
     }
@@ -88,6 +94,7 @@ $(document).ready(function () {
     // Starts game by displaying first question
     $("#start").on("click", function () {
         resetGame();
+
         // Hides start button and instructions
         $(this).css("display", "none");
         $("#instructions").empty();
@@ -106,14 +113,11 @@ $(document).ready(function () {
             status = "incorrect";
             incorrect++;
         }
-        // Ask next question
-        // askQuestion();
 
-        clearInterval(intervalID);
-        displayMessage(status);
-        setTimeout(proceedToNextQ, 5000);
+        proceedToNextQ();
     })
 
+    /* Resets stats for the game */
     function resetGame() {
         questionIndex = 0;
         correct = 0;
@@ -147,20 +151,27 @@ $(document).ready(function () {
         }
     }
 
+    /* Clears messages and proceeds to next question */
     function proceedToNextQ() {
-        // Clears out message and image before displaying next question
-        $("#message, #post-question-image").empty();
-        askQuestion();
-    }
+        // Clears timer, displays correct/incorrect/unanswered message
+        clearInterval(intervalID);
+        displayMessage(status);
 
+        setTimeout(function(){
+            // Clears out message and image
+            $("#message, #post-question-image").empty();
+            askQuestion();
+        }, 5000);
+    }
 })
 
 /*
  * TODO (if you have extra time!!!):
  * 
- * Change order answered are displayed for randomization
+ * Change order answers are displayed for randomization
  * Display different messages at end of game dependent on score
  * Show different images/gifs for each question
+ * Change hover color only when there a question and its answers are displayed
  * 
  * 
  */
